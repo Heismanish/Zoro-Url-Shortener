@@ -28,7 +28,8 @@ function generateShortURL(req, res) {
                 redirectURL: originalUrl,
                 visitHistory: [],
             });
-            res.json({ message: "short id has been created ", shortId: url.shortId });
+            // res.json({ message: "short id has been created ", shortId: url.shortId });
+            res.render("home", { id: url.shortId });
         }
         catch (error) {
             console.error("Some error occured during generating short id", error);

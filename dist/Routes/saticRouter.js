@@ -12,20 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
 const url_1 = __importDefault(require("../Models/url"));
-function handleAnalytics(req, res) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const shortId = req.params.shortId;
-        try {
-            const url = yield url_1.default.findOne({
-                shortId,
-            });
-            console.log(url);
-            res.json({ history: url === null || url === void 0 ? void 0 : url.visitHistory, clicks: url === null || url === void 0 ? void 0 : url.visitHistory.length });
-        }
-        catch (error) {
-            res.status(500).json({ message: "Error while fethcing analytics" });
-        }
-    });
-}
-exports.default = handleAnalytics;
+const router = (0, express_1.Router)();
+router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const urls = yield url_1.default.find({});
+    console.log(urls);
+    res.render("home", { urls });
+}));
+exports.default = router;

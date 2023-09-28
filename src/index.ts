@@ -3,14 +3,17 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import router from "./Routes/url";
 import shortUrlRoute from "./Routes/shortId";
-// import URLModel from "./Models/url";
+import path from "path";
+import URLModel from "./Models/url";
+import StaticRouter from "./Routes/saticRouter";
 
 // Load Environment variables
 dotenv.config();
 
 // creating the server
 const app = express();
-app.use(express.json());
+app.use(express.json()); // to read body
+app.use(express.urlencoded());
 
 // Configuring our env variables:
 const PORT = process.env.PORT || 3001;
@@ -30,8 +33,19 @@ mongoose
 // Setting up routes:
 app.use("/url", router);
 app.use("/", shortUrlRoute);
+app.use("/", StaticRouter);
 
-app.get("/", (req: Request, res: Response) =>
+// setting up our view engine to ejs
+app.set("view engine", "ejs");
+app.set("views", path.resolve("./src/View"));
+
+// app.get("/", async (req: Request, res: Response) => {
+// 	const urls = await URLModel.find({});
+// 	console.log(urls);
+// 	res.render("home", { urls });
+// });
+
+app.get("/test", (req: Request, res: Response) =>
 	res.json({ msg: "Home of the server" })
 );
 
