@@ -7,3 +7,5 @@ Zoro is a express app as of now which provides you with a shorter url as a repla
 - POST at `/url` : Generates a new url(shortened version) for a provided URL in the form "example.com/random-id"
 - GET at `/:id` : Redirects to the original URL.
 - GET at `/url/analytics/:id` : Returns the clicks for the provided shortId.
+
+<img src="Screenshot from 2023-09-28 20-33-50.png" alt="demo image">
