@@ -22,12 +22,21 @@ function generateShortURL(req, res) {
             return res.status(400).json({ message: "URL is required" });
         }
         const shortId = (0, nanoid_1.nanoid)(8);
+        let createdBy;
+        console.log("Hola Mola Pola Sola Zola");
+        console.log(req.body.user);
+        if (req.body.user && req.body.user._id) {
+            createdBy = req.body.user._id;
+            console.log("akjfjb");
+        }
         try {
             const url = yield url_1.default.create({
                 shortId,
                 redirectURL: originalUrl,
                 visitHistory: [],
+                createdBy,
             });
+            console.log(shortId);
             // res.json({ message: "short id has been created ", shortId: url.shortId });
             res.render("home", { id: url.shortId });
         }

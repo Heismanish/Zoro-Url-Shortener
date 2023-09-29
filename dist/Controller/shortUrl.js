@@ -20,7 +20,7 @@ function originalIdRedirector(req, res) {
         try {
             console.log("Reached");
             const urlDocument = yield url_1.default.findOneAndUpdate({ shortId }, { $push: { visitHistory: { timestamp: Date.now() } } });
-            console.log(urlDocument);
+            // console.log(urlDocument);
             if (urlDocument && (urlDocument === null || urlDocument === void 0 ? void 0 : urlDocument.redirectURL)) {
                 res.redirect(urlDocument === null || urlDocument === void 0 ? void 0 : urlDocument.redirectURL);
             }

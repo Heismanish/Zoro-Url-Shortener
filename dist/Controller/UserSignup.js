@@ -12,28 +12,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const url_1 = __importDefault(require("../Models/url"));
-const router = (0, express_1.Router)();
-router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!req.body.user) {
-        res.redirect("/login");
-    }
-    let createdBy;
-    if (req.body.user && req.body.user._id) {
-        createdBy = req.body.user._id;
-        console.log("akjfjb");
-    }
-    const urls = yield url_1.default.find({ createdBy });
-    console.log(urls);
-    res.render("home", { urls });
-}));
-router.get("/signup", (req, res) => {
-    console.log("reached signup");
-    res.render("signup");
+const user_1 = __importDefault(require("../Models/user"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const userSignUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { name, email, password } = req.body;
+    const hashPass = yield bcrypt_1.default.hash(password, 10);
+    yield user_1.default.create({
+        name,
+        email,
+        password: hashPass,
+    });
+    // console.log(name, email, hashPass);
+    return res.redirect("/");
 });
-router.get("/login", (req, res) => {
-    console.log("reached login");
-    res.render("login");
-});
-exports.default = router;
+exports.default = userSignUp;

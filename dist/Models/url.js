@@ -19,6 +19,7 @@ const urlSchema = new mongoose_1.default.Schema({
         type: String,
         required: true,
     },
+    createdBy: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "user" },
     visitHistory: [{ timestamp: { type: Number } }],
 }, { timestamps: true });
 // defining model

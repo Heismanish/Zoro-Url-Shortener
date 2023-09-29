@@ -6,7 +6,9 @@ import shortUrlRoute from "./Routes/shortId";
 import path from "path";
 import URLModel from "./Models/url";
 import StaticRouter from "./Routes/saticRouter";
-
+import UserRoute from "./Routes/user";
+import { userVerification, userCheck } from "./Middlewares/userAuth";
+import cookieParser from "cookie-parser";
 // Load Environment variables
 dotenv.config();
 
@@ -14,6 +16,7 @@ dotenv.config();
 const app = express();
 app.use(express.json()); // to read body
 app.use(express.urlencoded());
+app.use(cookieParser());
 
 // Configuring our env variables:
 const PORT = process.env.PORT || 3001;
@@ -30,24 +33,15 @@ mongoose
 		console.log("Error while connecting to db");
 	});
 
-// Setting up routes:
-app.use("/url", router);
-app.use("/", shortUrlRoute);
-app.use("/", StaticRouter);
-
 // setting up our view engine to ejs
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./src/View"));
 
-// app.get("/", async (req: Request, res: Response) => {
-// 	const urls = await URLModel.find({});
-// 	console.log(urls);
-// 	res.render("home", { urls });
-// });
-
-app.get("/test", (req: Request, res: Response) =>
-	res.json({ msg: "Home of the server" })
-);
+// Setting up routes:
+app.use("/", userCheck, StaticRouter); // render pages
+app.use("/sid/", shortUrlRoute); //redirect to url
+app.use("/url", userVerification, router); //generate url
+app.use("/user", UserRoute);
 
 // starting the server
 app.listen(PORT, () => {

@@ -11,7 +11,7 @@ async function originalIdRedirector(req: Request, res: Response) {
 			{ $push: { visitHistory: { timestamp: Date.now() } } }
 		);
 
-		console.log(urlDocument);
+		// console.log(urlDocument);
 
 		if (urlDocument && urlDocument?.redirectURL) {
 			res.redirect(urlDocument?.redirectURL);

@@ -11,13 +11,23 @@ async function generateShortURL(req: Request, res: Response) {
 	}
 
 	const shortId = nanoid(8);
+	let createdBy;
+	console.log("Hola Mola Pola Sola Zola");
+	console.log(req.body.user);
+
+	if (req.body.user && req.body.user._id) {
+		createdBy = req.body.user._id;
+		console.log("akjfjb");
+	}
+
 	try {
 		const url = await URLModel.create({
 			shortId,
 			redirectURL: originalUrl,
 			visitHistory: [],
+			createdBy,
 		});
-
+		console.log(shortId);
 		// res.json({ message: "short id has been created ", shortId: url.shortId });
 		res.render("home", { id: url.shortId });
 	} catch (error) {
