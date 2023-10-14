@@ -49,7 +49,6 @@ Run the app:
     npm start
 ```
 
- Zoro URL Shortener will be live at http://localhost:3000.
 
 ## Contributing
 
