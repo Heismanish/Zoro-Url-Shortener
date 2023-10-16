@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+    mongodbzoro:
+      image: mongo
+      ports: 
+        - "27017:27017"
+      volumes:
+        - mongodb_data:/data/db
+
+    zoro-app:
+      restart: true
+      build: 
+        context: .
+        dockerfile: Dockerfile
+      ports:
+        - "3001:3001"
+      environment:
+        - MONGO_URL=mongodb://mongodbzoro:27017
+      depends_on:
+        - mongodbzoro
+        
+volumes:
+  mongodb_data:
