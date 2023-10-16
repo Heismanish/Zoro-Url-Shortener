@@ -21,7 +21,7 @@ app.use(cookieParser());
 // Configuring our env variables:
 const PORT = process.env.PORT || 3001;
 const MONGO_URI =
-	process.env.MONGO_URI || "mongodb://mongodbzoro:27017/URL-Shortrner";
+	process.env.MONGO_URI || "mongodb://localhost:27017/URL-Shortrner";
 
 // Connecting DB:
 mongoose
